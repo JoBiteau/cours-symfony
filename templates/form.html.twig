@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire{% endblock %}
+{% block stylesheets %}{% endblock %}
+{% block titre %}Formulaire{% endblock %}
+{% block body %}
+    {%  if form is defined %}
+        {{ form(form) }}
+    {%  else %}
+        Aucun formulaire détecté
+    {%  endif %}
+
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
