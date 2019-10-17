@@ -3,6 +3,8 @@
 namespace App\Command;
 
 use App\Entity\Ville;
+use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -10,6 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 
 class Ex1HydrateCommand extends Command
@@ -18,13 +21,15 @@ class Ex1HydrateCommand extends Command
     protected $entityManager;
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * Ex1HydrateCommand constructor.
+     * @param EntityManagerInterface $entityManager
      */
-    protected function initialize (InputInterface $input, OutputInterface $output)
+    public function __construct (EntityManagerInterface $entityManager)
     {
-//        $this->entityManager = $this->getDoctrine->;
+        parent::__construct();
+        $this->entityManager = $entityManager;
     }
+
 
     protected function configure()
     {
@@ -35,10 +40,11 @@ class Ex1HydrateCommand extends Command
         ;
     }
 
+
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-//        $em = getDoct;
-
+        $io = new SymfonyStyle($input, $output);
 
         $results = array(
             array(
@@ -81,13 +87,13 @@ class Ex1HydrateCommand extends Command
             $ville->setPopulation($result['population']);
             $ville->setDensite($result['densite']);
 
-            $em->persist();
+            $em->persist($ville);
             $progressBar->advance();
 
         }
         $em->flush();
 
 
-//        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $io->success('Base de données hydratée ! ! !.');
     }
 }
