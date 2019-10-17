@@ -47,6 +47,7 @@ class Ex1CleanCommand extends Command
         $em = $this->entityManager;
 
         $em->getConnection()->query('TRUNCATE ville ')->execute();
+        $em->getConnection()->query('TRUNCATE user ')->execute();
 
 
         $io->success('Base de données vidée ! ! !.');
